@@ -24,9 +24,11 @@ body {
 }
 
 #display {
-    padding: 10px 70px;
+    width: 280px;
+    padding: 10px 10px;
     background-color: #bde0fe;
     border-radius: 10px;
+    text-align: right;
 }
 
 button {
