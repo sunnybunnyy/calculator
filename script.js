@@ -29,3 +29,15 @@ function operate(operator, num1, num2) {
         divide(num1, num2);
     }
 }
+
+function populateDisplay() {
+    let displayValue;
+    let digits = document.querySelectorAll('.digits');
+    digits.forEach((digit) => {
+        digit.addEventListener("click", () => {
+            let display = document.querySelector('#display');
+            display.textContent = digit.textContent;
+            displayValue = display.textContent;
+        })
+    })
+}
