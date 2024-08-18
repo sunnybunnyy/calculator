@@ -16,7 +16,7 @@ body {
     flex-direction: column;
     align-items: center;
     border-radius: 10px;
-    margin: 100px;
+    margin: calc((100vh - 790px) / 2);
     padding: 50px;
     background-color: #590d22;
     gap: 20px;

@@ -11,6 +11,10 @@ function multiply(num1, num2) {
 }
 
 function divide(num1, num2) {
+    console.log("num1: " + num1 + "   num2: " + num2);
+    if (num2 === 0) {
+        return "D:";
+    }
     return num1 / num2;
 }
 
@@ -29,7 +33,11 @@ function operate(operator, num1, num2) {
 
 function displayNum(num) {
     let display = document.querySelector('#display');
-    display.textContent = roundDecimalPlaces(num);
+    if (num === 'D:') {
+        display.textContent = num;
+    } else {
+        display.textContent = roundDecimalPlaces(num);
+    }
 }
 
 function calculate(operator, num1, num2) {
@@ -73,17 +81,27 @@ function createExpression() {
                     secondNum ??= 0;
                     secondNum += button.textContent;
                     displayNum(parseFloat(secondNum));
-                }
+                } // doesn't work when operator is firset input
             } else if (button.classList.contains('operator')) {
                     if (secondNum != null) {
                         firstNum = calculate(operator, firstNum, secondNum);
+                        if (firstNum === 'D:') {
+                            firstNum = null;
+                            solution = null;
+                        }
                         secondNum = null;
                     }
-                    operator = button.textContent;
+                    if (firstNum != null) {
+                        operator = button.textContent;
+                    }
             } else if (button.classList.contains('equals')) {
                 if (secondNum != null) {
                     solution = calculate(operator, firstNum, secondNum);
-                    firstNum = solution;
+                    if (solution === 'D:') {
+                        firstNum = null;
+                    } else {
+                        firstNum = solution;
+                    }
                     secondNum = null;
                     operator = null;
                 }
@@ -93,7 +111,6 @@ function createExpression() {
                 operator = null;
                 displayNum('');
             }
-
         })
     })
 }
