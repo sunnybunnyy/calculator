@@ -80,16 +80,20 @@ function createExpression() {
                         secondNum = null;
                     }
                     operator = button.textContent;
-            }
-
-            else if (button.classList.contains('equals')) {
+            } else if (button.classList.contains('equals')) {
                 if (secondNum != null) {
                     solution = calculate(operator, firstNum, secondNum);
                     firstNum = solution;
                     secondNum = null;
                     operator = null;
                 }
+            } else if (button.classList.contains('clear')) {
+                firstNum = null;
+                secondNum = null;
+                operator = null;
+                displayNum('');
             }
+
         })
     })
 }
