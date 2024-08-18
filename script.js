@@ -40,15 +40,16 @@ function calculate(operator, num1, num2) {
 }
 
 function roundDecimalPlaces(num) {
-    const decimalPlaces = getDecimalPlaces(num);
-    if (decimalPlaces < 0 || getNumDigits(num) > 8) {
+    const decimalPlaces = 8 - indexOfDecimal(num);
+    console.log("decimalPlaces: " + decimalPlaces + "   numDigits: " + getNumDigits(num));
+    if (indexOfDecimal(num) > 8 && getNumDigits(num) > 8) {
         return "Too big!";
     }
     return Math.round(num * (10 ** decimalPlaces)) / (10 ** decimalPlaces);
 }
 
-function getDecimalPlaces(num) {
-    return 8 - num.toString().indexOf('.');
+function indexOfDecimal(num) {
+    return num.toString().indexOf('.');
 }
 
 function getNumDigits(num) {
