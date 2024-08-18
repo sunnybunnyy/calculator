@@ -1,7 +1,3 @@
-let num1Global;
-let num2Global;
-let operatorGlobal;
-
 function add(num1, num2) {
     return num1 + num2;
 }
@@ -32,52 +28,57 @@ function operate(operator, num1, num2) {
 }
 
 function displayNum(num) {
-    /*let digits = document.querySelectorAll('.digits');
-    digits.forEach((digit) => {
-        digit.addEventListener("click", () => {*/
-            let display = document.querySelector('#display');
-            display.textContent = num;
-            /*let displayValue = display.textContent;
-            return displayValue;
-        })
-    })*/
+    let display = document.querySelector('#display');
+    display.textContent = num;
 }
 
-/*function displaySolution(num) {
-    let display = document.querySelector('#display');
-    display.textContent = 
-}*/
+function calculate(operator, num1, num2) {
+    console.log('= ' + operator + " " + parseFloat(num1) + " " + parseFloat(num2) + " " + operate(operator, parseFloat(num1), parseFloat(num2)));
+    let solution = operate(operator, parseFloat(num1), parseFloat(num2));
+    displayNum(roundDecimalPlaces(solution));
+    return solution;
+}
 
-function calculate() {
-    let firstNum = 0;
-    let secondNum = 0;
+function roundDecimalPlaces(num) {
+    return Math.round(num * (10 ** 14)) / (10 ** 14);
+}
+
+function createExpression() {
+    let firstNum;
+    let secondNum;
     let operator;
+    let solution;
     let buttons = document.querySelectorAll('button');
     buttons.forEach((button) => {
         button.addEventListener("click", () => {
             if (button.classList.contains('digit')) {
                 if (!operator) {
+                    firstNum ??= 0;
                     firstNum += button.textContent;
-                    displayNum(parseInt(firstNum));
+                    displayNum(roundDecimalPlaces(parseFloat(firstNum)));
                 } else {
+                    secondNum ??= 0;
                     secondNum += button.textContent;
-                    displayNum(parseInt(secondNum));
+                    displayNum(roundDecimalPlaces(parseFloat(secondNum)));
                 }
-            } else if (button.classList.contains('operator')
-                        && typeof firstNum !== undefined) {
+            } else if (button.classList.contains('operator')) {
+                    if (secondNum != null) {
+                        firstNum = calculate(operator, firstNum, secondNum);
+                        secondNum = null;
+                    }
                     operator = button.textContent;
-                    displayNum();
-            }
+            } // split into nested if statement
 
-            if (button.classList.contains('equals')) {
-                console.log('= ' + operator + " " + parseInt(firstNum) + " " + parseInt(secondNum) + " " + operate(operator, parseInt(firstNum), parseInt(secondNum)));
-                displayNum(operate(operator, parseInt(firstNum), parseInt(secondNum)));
-                firstNum = 0;
-                secondNum = 0;
-                operator = null;
+            else if (button.classList.contains('equals')) {
+                if (secondNum != null) {
+                    solution = calculate(operator, firstNum, secondNum);
+                    firstNum = null;
+                    secondNum = null;
+                    operator = null;
+                }
             }
         })
     })
 }
 
-calculate();
+createExpression();
