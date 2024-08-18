@@ -1,9 +1,9 @@
 * {
     font-family: Tahoma, sans-serif;
+    color: #fff0f3;
     border: 0;
     padding: 0;
     margin: 0;
-    color: #fff0f3;
 }
 
 body {
@@ -15,31 +15,31 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-radius: 10px;
-    margin: 10px;
-    padding: 50px;
     background-color: #590d22;
-    gap: 30px;
     width: 400px;
     height: 700px;
+    margin: 10px;
+    padding: 50px;
+    border-radius: 10px;
+    gap: 30px;
 }
 
 #display {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    padding: 10px;
+    background-color: #ff4d6d;
     width: 380px;
     height: 150px;
-    background-color: #ffb3c1;
+    padding: 10px;
     border-radius: 10px;
     font-size: 80px;
 }
 
 button {
-    border-radius: 10px;
     width: 80px;
     height: 100px;
+    border-radius: 10px;
     font-size: 40px;
 }
 
@@ -63,26 +63,42 @@ button {
     gap: 10px;
 }
 
-#digits button {
-    background-color: #800f2f;
-}
-
-#operators button {
-    background-color: #a4133c;
-}
-
-#digits button:hover {
+.special {
     background-color: #c9184a;
 }
 
-#operators button:hover {
-    background-color: #ff4d6d;
+button.special:hover {
+    background-color: #ffb3c1;
 }
 
-#digits button:active {
+button.special:active {
+    background-color: #ffccd5;
+}
+
+button.digit {
+    background-color: #800f2f;
+}
+
+button.operator {
+    background-color: #a4133c;
+}
+
+button.digit:hover {
     background-color: #ff758f;
 }
 
-#operators button:focus {
+button.operator:hover {
     background-color: #ff8fa3;
+}
+
+button.digit:active {
+    background-color: #ffccd5;
+}
+
+button.operator:focus  {
+    background-color: #ffccd5;
+}
+
+.zero {
+   width: 170px; 
 }

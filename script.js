@@ -31,27 +31,28 @@ function operate(operator, num1, num2) {
     }
 }
 
-function displayNum(num) {
+function displayNum(num, decimal) {
     let display = document.querySelector('#display');
     if (num === 'D:' || num === '') {
         display.textContent = num;
     } else {
-        display.textContent = roundDecimalPlaces(parseFloat(num));
+        display.textContent = roundDecimalPlaces(parseFloat(num)) + (decimal ? '.' : '');
+        return roundDecimalPlaces(parseFloat(num)) + (decimal ? '.' : '');
     }
 }
 
 function calculate(operator, num1, num2) {
     console.log('= ' + operator + " " + parseFloat(num1) + " " + parseFloat(num2) + " " + operate(operator, parseFloat(num1), parseFloat(num2)));
     let solution = operate(operator, parseFloat(num1), parseFloat(num2));
-    displayNum(solution);
-    return solution;
+    return displayNum(solution);
 }
 
 function roundDecimalPlaces(num) {
     const decimalPlaces = 8 - indexOfDecimal(num);
-    console.log("decimalPlaces: " + decimalPlaces + "   numDigits: " + getNumDigits(num));
-    if (indexOfDecimal(num) > 8 && getNumDigits(num) > 8) {
-        return "Too big!";
+    const overflow = getNumDigits(num) - 8;
+    console.log("indexOfDecimal: " + indexOfDecimal(num) + "   numDigits: " + getNumDigits(num));
+    if (num > 99999999) {
+        return Math.trunc(num / 10);
     }
     return Math.round(num * (10 ** decimalPlaces)) / (10 ** decimalPlaces);
 }
@@ -76,11 +77,33 @@ function createExpression() {
                 if (!operator) {
                     firstNum ??= 0;
                     firstNum += button.textContent;
-                    displayNum(firstNum);
+                    let decimal = false;
+                    if (button.textContent === '.') {
+                        decimal = true;
+                    }
+                    firstNum = displayNum(firstNum, decimal);
                 } else {
                     secondNum ??= 0;
                     secondNum += button.textContent;
-                    displayNum(secondNum);
+                    if (button.textContent === '.') {
+                        decimal = true;
+                    }
+                    secondNum = displayNum(secondNum, decimal);
+                }
+            } else if (button.classList.contains('equals')) {
+                console.log('equals   = ' + operator + " " + firstNum + " " + secondNum + " " + solution);
+                
+                if (secondNum != null) {
+                    solution = calculate(operator, firstNum, secondNum);
+                    if (solution === 'D:') {
+                        firstNum = null;
+                    } else {
+                        firstNum = solution;
+                    }
+                    secondNum = null;
+                    solution = null;
+                    operator = null;
+                    console.log()
                 }
             } else if (button.classList.contains('operator')) {
                     if (secondNum != null) {
@@ -94,22 +117,24 @@ function createExpression() {
                     if (firstNum != null) {
                         operator = button.textContent;
                     }
-            } else if (button.classList.contains('equals')) {
-                if (secondNum != null) {
-                    solution = calculate(operator, firstNum, secondNum);
-                    if (solution === 'D:') {
-                        firstNum = null;
-                    } else {
-                        firstNum = solution;
-                    }
-                    secondNum = null;
-                    operator = null;
-                }
             } else if (button.classList.contains('clear')) {
                 firstNum = null;
                 secondNum = null;
                 operator = null;
-                displayNum('');
+                displayNum('', false);
+            } else if (button.classList.contains('backspace')) {
+                console.log('backspace   = ' + operator + " " + firstNum + " " + secondNum + " " + solution);
+                if (secondNum != null) {
+                    const secondNumStr = secondNum.toString();
+                    const newSecondNumStr = secondNumStr.slice(0, secondNumStr.length - 1)
+                    secondNum = displayNum(newSecondNumStr, false);
+                    console.log("secondNum is edited");
+                } else if (firstNum != null) {
+                    const firstNumStr = firstNum.toString()
+                    const newFirstNumStr = firstNumStr.slice(0, firstNumStr.length - 1);
+                    firstNum = displayNum(newFirstNumStr, false);
+                    console.log("firstNum is edited " + newFirstNumStr + "!");
+                }  
             }
         })
     })
