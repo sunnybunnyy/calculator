@@ -33,10 +33,10 @@ function operate(operator, num1, num2) {
 
 function displayNum(num) {
     let display = document.querySelector('#display');
-    if (num === 'D:') {
+    if (num === 'D:' || num === '') {
         display.textContent = num;
     } else {
-        display.textContent = roundDecimalPlaces(num);
+        display.textContent = roundDecimalPlaces(parseFloat(num));
     }
 }
 
@@ -76,12 +76,12 @@ function createExpression() {
                 if (!operator) {
                     firstNum ??= 0;
                     firstNum += button.textContent;
-                    displayNum(parseFloat(firstNum));
+                    displayNum(firstNum);
                 } else {
                     secondNum ??= 0;
                     secondNum += button.textContent;
-                    displayNum(parseFloat(secondNum));
-                } // doesn't work when operator is firset input
+                    displayNum(secondNum);
+                }
             } else if (button.classList.contains('operator')) {
                     if (secondNum != null) {
                         firstNum = calculate(operator, firstNum, secondNum);

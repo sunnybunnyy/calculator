@@ -16,11 +16,12 @@ body {
     flex-direction: column;
     align-items: center;
     border-radius: 10px;
-    margin: calc((100vh - 790px) / 2);
+    margin: 10px;
     padding: 50px;
     background-color: #590d22;
-    gap: 20px;
+    gap: 30px;
     width: 400px;
+    height: 700px;
 }
 
 #display {
@@ -37,25 +38,29 @@ body {
 
 button {
     border-radius: 10px;
-    width: 90px;
-    height: 110px;
+    width: 80px;
+    height: 100px;
     font-size: 40px;
 }
 
 #buttons {
     display: flex;
+    gap: 30px;
 }
 
 #digits {
     display: flex;
     flex-flow: row wrap-reverse;
-    gap: 10px;
 }
 
 #operators {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+}
+
+#digits, #operators {
+    display: flex;
+    gap: 10px;
 }
 
 #digits button {
