@@ -1,6 +1,5 @@
 * {
     font-family: Tahoma, sans-serif;
-    font-size: xx-large;
     border: 0;
     padding: 0;
     margin: 0;
@@ -18,10 +17,10 @@ body {
     align-items: center;
     border-radius: 10px;
     margin: 100px;
-    padding: 40px;
+    padding: 50px;
     background-color: #590d22;
     gap: 20px;
-    width: 300px;
+    width: 400px;
 }
 
 #display {
@@ -29,15 +28,18 @@ body {
     justify-content: flex-end;
     align-items: center;
     padding: 10px;
-    width: 280px;
-    height: 100px;
+    width: 380px;
+    height: 150px;
     background-color: #ffb3c1;
     border-radius: 10px;
+    font-size: 80px;
 }
 
 button {
     border-radius: 10px;
-    padding: 20px 23px;
+    width: 90px;
+    height: 110px;
+    font-size: 40px;
 }
 
 #buttons {
@@ -53,7 +55,7 @@ button {
 #operators {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
 }
 
 #digits button {

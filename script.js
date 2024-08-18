@@ -29,18 +29,30 @@ function operate(operator, num1, num2) {
 
 function displayNum(num) {
     let display = document.querySelector('#display');
-    display.textContent = num;
+    display.textContent = roundDecimalPlaces(num);
 }
 
 function calculate(operator, num1, num2) {
     console.log('= ' + operator + " " + parseFloat(num1) + " " + parseFloat(num2) + " " + operate(operator, parseFloat(num1), parseFloat(num2)));
     let solution = operate(operator, parseFloat(num1), parseFloat(num2));
-    displayNum(roundDecimalPlaces(solution));
+    displayNum(solution);
     return solution;
 }
 
 function roundDecimalPlaces(num) {
-    return Math.round(num * (10 ** 14)) / (10 ** 14);
+    const decimalPlaces = getDecimalPlaces(num);
+    if (decimalPlaces < 0 || getNumDigits(num) > 8) {
+        return "Too big!";
+    }
+    return Math.round(num * (10 ** decimalPlaces)) / (10 ** decimalPlaces);
+}
+
+function getDecimalPlaces(num) {
+    return 8 - num.toString().indexOf('.');
+}
+
+function getNumDigits(num) {
+    return num.toString().length;
 }
 
 function createExpression() {
@@ -55,11 +67,11 @@ function createExpression() {
                 if (!operator) {
                     firstNum ??= 0;
                     firstNum += button.textContent;
-                    displayNum(roundDecimalPlaces(parseFloat(firstNum)));
+                    displayNum(parseFloat(firstNum));
                 } else {
                     secondNum ??= 0;
                     secondNum += button.textContent;
-                    displayNum(roundDecimalPlaces(parseFloat(secondNum)));
+                    displayNum(parseFloat(secondNum));
                 }
             } else if (button.classList.contains('operator')) {
                     if (secondNum != null) {
@@ -67,12 +79,12 @@ function createExpression() {
                         secondNum = null;
                     }
                     operator = button.textContent;
-            } // split into nested if statement
+            }
 
             else if (button.classList.contains('equals')) {
                 if (secondNum != null) {
                     solution = calculate(operator, firstNum, secondNum);
-                    firstNum = null;
+                    firstNum = solution;
                     secondNum = null;
                     operator = null;
                 }
